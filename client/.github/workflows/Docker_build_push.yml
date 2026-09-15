@@ -9,6 +9,7 @@ name: Docker Image Build and push to a Registry
         branches:
             - develop
             - main
+            - 'feature/**'
 
 permissions:
     contents: read
