@@ -1,7 +1,8 @@
 FROM node:24-alpine3.23 AS build
 
 RUN addgroup -S appgroup && \
-    adduser -S -h /home/appuser -G appgroup appuser
+    adduser -S -h /home/appuser -G appgroup appuser && \
+    chown -R appuser:appgroup /home/appuser    # ← fix ownership
 
 WORKDIR /frontend/
 
