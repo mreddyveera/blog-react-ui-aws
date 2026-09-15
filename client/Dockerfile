@@ -1,16 +1,15 @@
 FROM node:24-alpine3.23 AS build
 
 RUN addgroup -S appgroup && \
-    adduser -S -h /home/appuser -G appgroup appuser && \
-    chown -R appuser:appgroup /home/appuser    # ← fix ownership
+    adduser -S appuser -G appgroup
+
+USER appuser
 
 WORKDIR /frontend/
 
 COPY --chown=appuser:appgroup package*.json ./
 
-USER appuser
-
-RUN npm ci --cache /home/appuser/.npm
+RUN npm ci
 
 COPY --chown=appuser:appgroup . .
 
