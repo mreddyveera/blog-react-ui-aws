@@ -1,0 +1,49 @@
+name: Feature branch validation
+on:
+    # pull_request:
+    #     branches:
+    #         - main
+    #         - develop
+    push:
+        branches:
+            - 'feature/**'
+permissions:
+    contents: read
+
+jobs:
+    feature_branch:
+        name: Feature branch validation
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Code checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+            - name: Gitleaks
+              uses: gitleaks/gitleaks-action@v3
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Node setup
+              uses: actions/setup-node@v4
+              with:
+                node-version: 24
+                cache: npm
+                cache-dependency-path: client/package-lock.json
+            - name: Install dependencies
+              working-directory: ./client
+              run: npm ci
+            - name: ESLINT
+              working-directory: ./client
+              run: npm run lint
+            - name: Prettier
+              working-directory: ./client
+              run: npx prettier --check .
+            - name: Build
+              working-directory: ./client
+              run: npm run build
+
+            - name: Audit dependencies
+              working-directory: ./client
+              run: npm audit --audit-level=high
+            
