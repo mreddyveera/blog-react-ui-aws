@@ -5,6 +5,7 @@
 
 import { useRef, useMemo } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { getEnv } from "@/helpers/getEnv";
 import {
   ClassicEditor,
   Autosave,
@@ -26,9 +27,6 @@ import {
 } from "ckeditor5";
 
 import "ckeditor5/ckeditor5.css";
-
-const LICENSE_KEY =
-  "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NjczOTgzOTksImp0aSI6ImEwODNhZjIwLTdjYjYtNGU0Ni1iOTZmLWNjZmExMDRmN2UwOSIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImFmY2UzOWRkIn0.PYjzLK37tfpVVy4RqO6A0f_n6GQs5zw3xwsjcqxCl5oP4DzhgJZOd8DU-zBD5fYprLgqL8IV5dWaoyncmK7nCA";
 
 export default function Editor({ props }) {
   const editorContainerRef = useRef(null);
@@ -92,7 +90,7 @@ export default function Editor({ props }) {
 
       initialData: props.initialData || "",
 
-      licenseKey: LICENSE_KEY,
+      licenseKey: `${getEnv("VITE_LICENSE_KEY")}`,
 
       mention: {
         feeds: [
