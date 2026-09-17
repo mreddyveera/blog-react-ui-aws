@@ -42,7 +42,6 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Index />} />
             <Route path={RouteProfile} element={<Profile />} />
-            
 
             {/* blog*/}
 
@@ -50,28 +49,21 @@ function App() {
             <Route path={RouteBlogByCategory()} element={<BlogByCategory />} />
             <Route path={RouteSearch()} element={<SearchResult />} />
 
-            
-
             <Route element={<AuthRouteProtection />}>
               <Route path={RouteBlogAdd} element={<AddBlog />} />
               <Route path={RouteBlog} element={<BlogDetails />} />
               <Route path={RouteBlogEdit()} element={<EditBlog />} />
-
-              
             </Route>
 
-            
             {/*comments*/}
-              <Route path={RouteComments} element={<Comments />} />
+            <Route path={RouteComments} element={<Comments />} />
 
-              {/*users*/}
+            {/*users*/}
             <Route path={RouteUser} element={<Users />} />
 
             <Route path={RouteAddCategory} element={<AddCategory />} />
             <Route path={RouteCategoryDetails} element={<CategoryDetails />} />
             <Route path={RouteEditCategory} element={<EditCategory />} />
-              
-            
           </Route>
           <Route path={RouteSignIn} element={<SignIn />} />
           <Route path={RouteSignUp} element={<SignUp />} />

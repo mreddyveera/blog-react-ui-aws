@@ -4,12 +4,10 @@ name: Docker Image Build and push to a Registry
         branches:
             - develop
             - main
-        types: [opened, synchronize, reopened]
-    push:
-        branches:
-            - develop
-            - main
-            - 'feature/**'
+    # push:
+    #     branches:
+    #         - develop
+    #         - main
 
 permissions:
     contents: read

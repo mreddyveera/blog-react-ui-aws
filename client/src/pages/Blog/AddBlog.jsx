@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import slugify from "slugify";
 import { showToast } from "@/helpers/showToast";
 import { getEnv } from "@/helpers/getEnv";
@@ -31,19 +31,17 @@ import { useNavigate } from "react-router-dom";
 import { RouteBlog } from "@/helpers/RouteName";
 
 const AddBlog = () => {
-  const navigate=useNavigate();
-  const user=useSelector((state)=>state.user);
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   const [filePreview, setPreview] = useState();
   const [file, setFile] = useState();
-  const {
-    data: categoryData,
-    loading,
-    error,
-  } = useFetch(`${getEnv("VITE_API_BASE_URL")}/category/all-categorys`, {
-    method: "get",
-    credentials: "include",
-  });
-  
+  const { data: categoryData } = useFetch(
+    `${getEnv("VITE_API_BASE_URL")}/category/all-categorys`,
+    {
+      method: "get",
+      credentials: "include",
+    },
+  );
 
   const formSchema = z.object({
     category: z.string().min(3, "Category must be at least 3 characters long"),
@@ -71,27 +69,22 @@ const AddBlog = () => {
   }, [blogTitle]);
 
   async function onSubmit(values) {
-    
     try {
-      const newValues={...values,author:user?.user?._id};
-      if(!file){
-        showToast('error','Feature image Required');
+      const newValues = { ...values, author: user?.user?._id };
+      if (!file) {
+        showToast("error", "Feature image Required");
       }
-      const formData=new FormData();
-      formData.append('file',file);
-      formData.append('data',JSON.stringify(newValues));
-      const response = await fetch(
-        `${getEnv("VITE_API_BASE_URL")}/blog/add`,
-        {
-          method: "post",
-          credentials:"include",
-          body: formData,
-        }
-      );
-     
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("data", JSON.stringify(newValues));
+      const response = await fetch(`${getEnv("VITE_API_BASE_URL")}/blog/add`, {
+        method: "post",
+        credentials: "include",
+        body: formData,
+      });
+
       const data = await response.json();
-     
-      
+
       if (!response.ok) {
         return showToast("error", data.message || "Registration failed");
       }
@@ -205,7 +198,7 @@ const AddBlog = () => {
                   <FormField
                     control={form.control}
                     name="blogContent"
-                    render={({ field }) => (
+                    render={() => (
                       <FormItem>
                         <FormLabel>BlogContent</FormLabel>
                         <FormControl>

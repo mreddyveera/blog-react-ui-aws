@@ -19,39 +19,40 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import slugify from "slugify";
 import { showToast } from "@/helpers/showToast";
 import { getEnv } from "@/helpers/getEnv";
 import { useFetch } from "@/hooks/useFetch";
 import Dropzone from "react-dropzone";
 import Editor from "@/components/Editor.jsx";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { RouteBlog } from "@/helpers/RouteName";
 import { decode } from "entities";
 import Loading from "@/components/Loading";
 const EditBlog = () => {
-  const {blogid}=useParams();
-  const navigate=useNavigate();
-  const user=useSelector((state)=>state.user);
+  const { blogid } = useParams();
+  const navigate = useNavigate();
+  // const user=useSelector((state)=>state.user);
   const [filePreview, setPreview] = useState();
   const [file, setFile] = useState();
-  const {
-    data: categoryData
-  } = useFetch(`${getEnv("VITE_API_BASE_URL")}/category/all-categorys`, {
-    method: "get",
-    credentials: "include",
-  });
+  const { data: categoryData } = useFetch(
+    `${getEnv("VITE_API_BASE_URL")}/category/all-categorys`,
+    {
+      method: "get",
+      credentials: "include",
+    },
+  );
 
-  const {
-    data: blogData, loading:blogLoading
-  } = useFetch(`${getEnv("VITE_API_BASE_URL")}/blog/edit/${blogid}`, {
-    method: "get",
-    credentials: "include",
-  },[blogid]);
- 
-  
+  const { data: blogData, loading: blogLoading } = useFetch(
+    `${getEnv("VITE_API_BASE_URL")}/blog/edit/${blogid}`,
+    {
+      method: "get",
+      credentials: "include",
+    },
+    [blogid],
+  );
 
   const formSchema = z.object({
     category: z.string().min(3, "Category must be at least 3 characters long"),
@@ -72,15 +73,14 @@ const EditBlog = () => {
     },
   });
   useEffect(() => {
-  if (blogData?.blog) {
-    setPreview(blogData.blog.featuredImage)
-    form.setValue("category", blogData.blog.category._id);
-    form.setValue("title", blogData.blog.title);
-    form.setValue("slug", blogData.blog.slug);
-    form.setValue("blogContent",decode(blogData.blog.blogContent));
-  }
-}, [blogData]);
-
+    if (blogData?.blog) {
+      setPreview(blogData.blog.featuredImage);
+      form.setValue("category", blogData.blog.category._id);
+      form.setValue("title", blogData.blog.title);
+      form.setValue("slug", blogData.blog.slug);
+      form.setValue("blogContent", decode(blogData.blog.blogContent));
+    }
+  }, [blogData]);
 
   const blogTitle = form.watch("title");
 
@@ -90,24 +90,23 @@ const EditBlog = () => {
   }, [blogTitle]);
 
   async function onSubmit(values) {
-    
     try {
-      if(!file){
-        showToast('error','Feature image Required');
+      if (!file) {
+        showToast("error", "Feature image Required");
       }
-      const formData=new FormData();
-      formData.append('file',file);
-      formData.append('data',JSON.stringify(values));
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("data", JSON.stringify(values));
       const response = await fetch(
         `${getEnv("VITE_API_BASE_URL")}/blog/update/${blogid}`,
         {
           method: "put",
-          credentials:"include",
+          credentials: "include",
           body: formData,
-        }
+        },
       );
       const data = await response.json();
-      
+
       if (!response.ok) {
         return showToast("error", data.message || "Registration failed");
       }
@@ -126,18 +125,20 @@ const EditBlog = () => {
     setFile(file);
     setPreview(preview);
   };
-  const handleEditorData = (event, editor) => {
+  const handleEditorData = (editor) => {
     const data = editor.getData();
     form.setValue("blogContent", data);
   };
-  if(blogLoading) return <Loading/>
+  if (blogLoading) return <Loading />;
   return (
     <>
       <div>
         <Card className="flex items-center justify-center pt-5 max-w-screen-md mx-auto">
           <Form {...form}>
             <CardContent>
-              <CardHeader className="text-2xl font-bold mb-4">Edit Blog</CardHeader>
+              <CardHeader className="text-2xl font-bold mb-4">
+                Edit Blog
+              </CardHeader>
               <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
                 <div className="mb-3 w-full sm:w-96">
                   <FormField
@@ -229,7 +230,7 @@ const EditBlog = () => {
                         <FormControl>
                           <Editor
                             props={{
-                              initialData:field.value,
+                              initialData: field.value,
                               onChange: handleEditorData,
                             }}
                           />

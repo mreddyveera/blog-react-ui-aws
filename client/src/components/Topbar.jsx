@@ -4,7 +4,12 @@ import { Button } from "./ui/button";
 import { BiLogIn } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBox from "./SearchBox.jsx";
-import { RouteBlogAdd, RouteIndex, RouteProfile, RouteSignIn } from "@/helpers/RouteName";
+import {
+  RouteBlogAdd,
+  RouteIndex,
+  RouteProfile,
+  RouteSignIn,
+} from "@/helpers/RouteName";
 import { useDispatch, useSelector } from "react-redux";
 import userprofile from "../assets/images/userprofile.jpg";
 import {
@@ -25,27 +30,28 @@ import { removeUser } from "@/redux/user/user.slice";
 const Topbar = () => {
   const user = useSelector((state) => state?.user);
 
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
-  const handleLogout=async()=>{
-    try{
-      const response=await fetch(`${getEnv('VITE_API_BASE_URL')}/auth/logout`,{
-        method:'get',
-        credentials:'include',
-      })
-      const data=await response.json();
-     if(!response.ok){
-      return showToast('error',data.message);
-     }
-     dispatch(removeUser());
-     showToast("success", data.message);
-     navigate(RouteIndex);
-    }
-    catch(error){
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        `${getEnv("VITE_API_BASE_URL")}/auth/logout`,
+        {
+          method: "get",
+          credentials: "include",
+        },
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        return showToast("error", data.message);
+      }
+      dispatch(removeUser());
+      showToast("success", data.message);
+      navigate(RouteIndex);
+    } catch (error) {
       showToast("error", error.message);
     }
-
-  }
+  };
   return (
     <>
       <div className="flex justify-between items-center h-16 fixed w-full z-20 bg-white px-4 md:px-8">
@@ -57,7 +63,7 @@ const Topbar = () => {
         </div>
         <div>
           {user.isLoggedIn ? (
-            <DropdownMenu >
+            <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="outline-none">
                   <Avatar className="h-9 w-9 cursor-pointer">
@@ -93,8 +99,15 @@ const Topbar = () => {
                   </Link>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem asChild className="text-red-600 cursor-pointer">
-                  <Button variant="ghost" onClick={handleLogout} className="w-full flex items-center gap-2">
+                <DropdownMenuItem
+                  asChild
+                  className="text-red-600 cursor-pointer"
+                >
+                  <Button
+                    variant="ghost"
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2"
+                  >
                     <IoLogOutOutline className="h-4 w-4 " />
                     <span>Logout</span>
                   </Button>

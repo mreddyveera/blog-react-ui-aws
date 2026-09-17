@@ -53,7 +53,7 @@ const Signin = () => {
           headers: { "Content-Type": "application/json" },
           credentials: "include",
           body: JSON.stringify(values),
-        }
+        },
       );
 
       const data = await response.json();
@@ -72,7 +72,6 @@ const Signin = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      
       <div>
         <Card>
           <CardHeader>
@@ -81,14 +80,17 @@ const Signin = () => {
             </CardTitle>
           </CardHeader>
           <div>
-        <GoogleLogin />
-        <div className="border-1 my-5 flex justify-center items-center">
-          <span className="absolute bg-white text-sm">Or</span>
-        </div>
-      </div>
+            <GoogleLogin />
+            <div className="border-1 my-5 flex justify-center items-center">
+              <span className="absolute bg-white text-sm">Or</span>
+            </div>
+          </div>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-sm">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="w-full max-w-sm"
+              >
                 <div className="mb-3">
                   <FormField
                     control={form.control}

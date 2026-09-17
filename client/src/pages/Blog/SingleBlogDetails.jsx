@@ -1,31 +1,29 @@
 import Comment from "@/components/Comment";
 import CommentCount from "@/components/CommentCount";
-import CommentList from "@/components/CommentList";
+// import CommentList from "@/components/CommentList";
 import LikeCount from "@/components/LikeCount";
 import Loading from "@/components/Loading";
 import RelatedBlog from "@/components/RelatedBlog";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { getEnv } from "@/helpers/getEnv.js";
 import { useFetch } from "@/hooks/useFetch.js";
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { zodResolver } from "@hookform/resolvers/zod";
 import { decode } from "entities";
 import React from "react";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
-const SingleBlogDetails = ({}) => {
-  const { blog,category } = useParams();
-  
- 
+const SingleBlogDetails = () => {
+  const { blog, category } = useParams();
 
-  const { data, loading, error } = useFetch(
+  const { data, loading } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/blog/get-blog/${blog}`,
     {
       method: "get",
       credentials: "include",
-    },[blog,category]
+    },
+    [blog, category],
   );
-  
 
   if (loading) return <Loading />;
   return (
@@ -46,10 +44,9 @@ const SingleBlogDetails = ({}) => {
               </div>
 
               <div className="flex justify-between items-center gap-5">
-                <LikeCount props={{blogid:data.blog._id}}/>
-                <CommentCount props={{blogid:data.blog._id}}/>
+                <LikeCount props={{ blogid: data.blog._id }} />
+                <CommentCount props={{ blogid: data.blog._id }} />
               </div>
-
             </div>
             <div className="my-6 w-full max-h-[420px] overflow-hidden rounded-xl border">
               <img
@@ -72,7 +69,7 @@ const SingleBlogDetails = ({}) => {
       )}
 
       <div className="border rounded w-full md:w-5/12 p-5 mt-6 md:mt-0">
-        <RelatedBlog props={{category:category,slug:blog}}/>
+        <RelatedBlog props={{ category: category, slug: blog }} />
       </div>
     </div>
   );
