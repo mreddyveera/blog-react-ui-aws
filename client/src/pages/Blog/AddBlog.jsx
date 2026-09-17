@@ -198,7 +198,7 @@ const AddBlog = () => {
                   <FormField
                     control={form.control}
                     name="blogContent"
-                    render={({ field }) => (
+                    render={() => (
                       <FormItem>
                         <FormLabel>BlogContent</FormLabel>
                         <FormControl>
