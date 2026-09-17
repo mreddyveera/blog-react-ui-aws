@@ -1,19 +1,12 @@
 import React from "react";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { useSelector } from "react-redux";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { SlCalender } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { RouteBlogDetails } from "@/helpers/RouteName.js";
-import SingleBlogDetails from "@/pages/Blog/SingleBlogDetails.jsx";
 
 const BlogCard = ({ props }) => {
-  const user = useSelector((state) => state.user);
-  const avatarUrl = "avatarUrl";
- 
-  
-  
   return (
     <Link to={RouteBlogDetails(props?.category?.name, props.slug)}>
       <div>
@@ -23,10 +16,7 @@ const BlogCard = ({ props }) => {
               <div className="flex justify-between items-center gap-3">
                 <Avatar className="w-12 h-12 rounded-full border overflow-hidden">
                   <AvatarImage
-                    src={
-                      props?.featuredImage ||
-                      "http://github.com/shadcn.png"
-                    }
+                    src={props?.featuredImage || "http://github.com/shadcn.png"}
                     className="object-cover"
                   />
                 </Avatar>

@@ -12,8 +12,7 @@ const BlogByCategory = () => {
   const { category } = useParams();
   const {
     data: blogData,
-    loading,
-    error,
+    loading
   } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/blog/get-blog-by-category/${category}`,
     {

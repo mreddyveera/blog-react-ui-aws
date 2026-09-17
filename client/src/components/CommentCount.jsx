@@ -5,17 +5,21 @@ import { FaComment } from "react-icons/fa";
 import { Button } from "./ui/button";
 
 const CommentCount = ({ props }) => {
-  const { data, loading, error } = useFetch(
+  const { data } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/comment/get-count/${props.blogid}`,
     {
       method: "get",
       credentials: "include",
-    }
+    },
   );
-  
+
   return (
     <>
-      <Button type="button" variant="ghost" className="flex justify-between items-center">
+      <Button
+        type="button"
+        variant="ghost"
+        className="flex justify-between items-center"
+      >
         <FaComment />
         {data && data.commentCount}
       </Button>

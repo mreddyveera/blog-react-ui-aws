@@ -1,23 +1,20 @@
-export const deleteData=async(endpoint)=>{
-    const c=confirm('Are you sure to delete this data?');
-    if(c){
-        try{
-            const response=await fetch(endpoint,{
-                method:'delete',
-                credentials:"include"
-            })
-            const data=await response.json();
-            if(!response){
-                throw new Error(response.statusText);
-
-            }
-            return true;
-        }
-        catch(error){
-           
-            return false;
-        }
+export const deleteData = async (endpoint) => {
+  const c = confirm("Are you sure to delete this data?");
+  if (c) {
+    try {
+      const response = await fetch(endpoint, {
+        method: "delete",
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (!response) {
+        console.log(data);
+        throw new Error(response.statusText);
+      }
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
     }
-    else return false;
-
-}
+  } else return false;
+};

@@ -1,12 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import {
-  buildEditCategoryRoute,
-  RouteAddCategory,
-  RouteEditCategory,
-} from "@/helpers/RouteName";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -19,29 +13,24 @@ import {
 import { useFetch } from "@/hooks/useFetch.js";
 import { getEnv } from "@/helpers/getEnv.js";
 import Loading from "@/components/Loading.jsx";
-import { MdOutlineEditCalendar } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { deleteData } from "@/helpers/handleDelete";
 import { showToast } from "@/helpers/showToast";
 
 const Comments = () => {
   const [refreshData, setRefreshData] = useState(false);
-  const {
-    data: comments,
-    loading,
-    error,
-  } = useFetch(
+  const { data: comments, loading } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/comment/get-all-comment`,
     {
       method: "get",
       credentials: "include",
     },
-    [refreshData]
+    [refreshData],
   );
 
   const handleDelete = async (id) => {
-    const response =await deleteData(
-      `${getEnv("VITE_API_BASE_URL")}/comment/delete-comment/${id}`
+    const response = await deleteData(
+      `${getEnv("VITE_API_BASE_URL")}/comment/delete-comment/${id}`,
     );
     if (response) {
       setRefreshData(!refreshData);
@@ -50,7 +39,7 @@ const Comments = () => {
       showToast("error", "Data not deleted.");
     }
   };
- 
+
   if (loading) return <Loading />;
   return (
     <>
@@ -62,13 +51,13 @@ const Comments = () => {
                 <h1 className="text-2xl font-bold bg-violet-500">Comments</h1>
               </Button>
             </div>
-             <TableCaption className="text-2xl font-semibold">A list of your recent Comments.</TableCaption>
+            <TableCaption className="text-2xl font-semibold">
+              A list of your recent Comments.
+            </TableCaption>
           </CardHeader>
 
           <CardContent>
-            
             <Table>
-             
               <TableHeader>
                 <TableRow>
                   <TableHead>Blog</TableHead>
@@ -86,7 +75,7 @@ const Comments = () => {
                       <TableCell>{comment.user.name}</TableCell>
                       <TableCell>
                         {new Date(comment.createdAt).toLocaleDateString(
-                          "en-IN"
+                          "en-IN",
                         )}
                       </TableCell>
                       <TableCell>{comment.comment}</TableCell>
