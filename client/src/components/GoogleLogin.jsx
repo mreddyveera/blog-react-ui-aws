@@ -11,17 +11,17 @@ import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/user/user.slice";
 
 const GoogleLogin = () => {
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLogin = async () => {
     try {
       const googleResponse = await signInWithPopup(auth, provider);
-      const user=googleResponse.user;
-      const bodyData={
-        name:user.displayName,
-        email:user.email,
-        avatar:user.photoURL
-      }
+      const user = googleResponse.user;
+      const bodyData = {
+        name: user.displayName,
+        email: user.email,
+        avatar: user.photoURL,
+      };
       const response = await fetch(
         `${getEnv("VITE_API_BASE_URL")}/auth/googlelogin`,
         {
@@ -29,7 +29,7 @@ const GoogleLogin = () => {
           headers: { "Content-Type": "application/json" },
           credentials: "include",
           body: JSON.stringify(bodyData),
-        }
+        },
       );
 
       const data = await response.json();
@@ -37,7 +37,6 @@ const GoogleLogin = () => {
         return showToast("error", data.message || "Login failed");
       }
       dispatch(setUser(data.user));
-
 
       showToast("success", data.message || "LogIn successfully");
       navigate(RouteIndex);

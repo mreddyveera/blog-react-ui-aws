@@ -16,7 +16,7 @@ export const useFetch = (url, options = {}, dependencies = []) => {
         if (!response.ok) {
           throw new Error(
             `Error: ${response.statusText}`,
-            `${response.status}`
+            `${response.status}`,
           );
         }
 

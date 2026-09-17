@@ -28,7 +28,7 @@ import { setUser } from "@/redux/user/user.slice.js";
 import { useDispatch } from "react-redux";
 const SignUp = () => {
   const navigate = useNavigate();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const formSchema = z
     .object({
       name: z.string().min(3, "Name must be at least 3 characters long"),
@@ -66,7 +66,7 @@ const SignUp = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(values),
-        }
+        },
       );
 
       const data = await response.json();
@@ -83,7 +83,6 @@ const SignUp = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      
       <Form {...form}>
         <Card>
           <CardHeader>
@@ -92,13 +91,16 @@ const SignUp = () => {
             </CardTitle>
           </CardHeader>
           <div>
-        <GoogleLogin />
-        <div className="border-1 my-5 flex justify-center items-center">
-          <span className="absolute bg-white text-sm">Or</span>
-        </div>
-      </div>
+            <GoogleLogin />
+            <div className="border-1 my-5 flex justify-center items-center">
+              <span className="absolute bg-white text-sm">Or</span>
+            </div>
+          </div>
           <CardContent>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-sm">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-full max-w-sm"
+            >
               <div className="mb-3">
                 <FormField
                   control={form.control}

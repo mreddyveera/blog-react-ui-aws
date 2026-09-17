@@ -17,13 +17,10 @@ const LikeCount = ({ props }) => {
     ? `${getEnv("VITE_API_BASE_URL")}/bloglike/get-like/${props.blogid}/${userId}`
     : `${getEnv("VITE_API_BASE_URL")}/bloglike/get-like/${props.blogid}`;
 
-  const { data } = useFetch(
-    apiUrl,
-    {
-      method: "get",
-      credentials: "include",
-    }
-  );
+  const { data } = useFetch(apiUrl, {
+    method: "get",
+    credentials: "include",
+  });
 
   /*
    * Use API data as the source of truth initially.
@@ -34,12 +31,12 @@ const LikeCount = ({ props }) => {
   const likeCount =
     likeOverride?.blogid === props.blogid
       ? likeOverride.likeCount
-      : data?.likeCount ?? 0;
+      : (data?.likeCount ?? 0);
 
   const liked =
     likeOverride?.blogid === props.blogid
       ? likeOverride.liked
-      : data?.liked ?? false;
+      : (data?.liked ?? false);
 
   const handleLike = async () => {
     if (!user?.isLoggedIn) {
@@ -59,7 +56,7 @@ const LikeCount = ({ props }) => {
             blogid: props.blogid,
             userid: user.user._id,
           }),
-        }
+        },
       );
 
       const responseData = await response.json();
@@ -91,11 +88,7 @@ const LikeCount = ({ props }) => {
       variant="ghost"
       className="flex items-center gap-2 text-muted-foreground hover:text-primary"
     >
-      {liked ? (
-        <AiFillHeart className="text-red-500" />
-      ) : (
-        <AiOutlineHeart />
-      )}
+      {liked ? <AiFillHeart className="text-red-500" /> : <AiOutlineHeart />}
 
       {likeCount}
     </Button>

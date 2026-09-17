@@ -5,15 +5,14 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const OnlyAdminAllowed = () => {
   const user = useSelector((state) => state.user);
-  if (user?.isLoggedIn && user?.user?.role==="admin") {
+  if (user?.isLoggedIn && user?.user?.role === "admin") {
     return (
       <div>
         <Outlet />
       </div>
     );
-  }
-  else{
-    return <Navigate to={RouteSignIn}/>
+  } else {
+    return <Navigate to={RouteSignIn} />;
   }
 };
 

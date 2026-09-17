@@ -31,11 +31,11 @@ const AddCategory = () => {
     },
   });
 
-  useEffect(()=>{
-    const categoryName=form.watch('name');
-    const slug=slugify(categoryName,{lower:true});
-    form.setValue('slug',slug);
-  })
+  useEffect(() => {
+    const categoryName = form.watch("name");
+    const slug = slugify(categoryName, { lower: true });
+    form.setValue("slug", slug);
+  });
 
   async function onSubmit(values) {
     try {
@@ -45,7 +45,7 @@ const AddCategory = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(values),
-        }
+        },
       );
       const data = await response.json();
       if (!response.ok) {
@@ -53,8 +53,7 @@ const AddCategory = () => {
       }
       form.reset();
 
-      
-       showToast("success", data.message);
+      showToast("success", data.message);
     } catch (error) {
       showToast("error", error.message);
     }
@@ -62,11 +61,14 @@ const AddCategory = () => {
 
   return (
     <>
-    <div>
-      <Card  className="pt-5 max-w-screen-md mx-auto">
+      <div>
+        <Card className="pt-5 max-w-screen-md mx-auto">
           <Form {...form}>
             <CardContent>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-sm">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="w-full max-w-sm"
+              >
                 <div className="mb-3">
                   <FormField
                     control={form.control}
@@ -106,9 +108,7 @@ const AddCategory = () => {
             </CardContent>
           </Form>
         </Card>
-
-    </div>
-      
+      </div>
     </>
   );
 };

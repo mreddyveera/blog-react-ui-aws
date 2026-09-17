@@ -11,15 +11,11 @@ export const showToast = (type, message) => {
     progress: undefined,
     theme: "light",
   };
-  if(type==="success"){
-    toast.success(message,config);
+  if (type === "success") {
+    toast.success(message, config);
+  } else if (type === "error") {
+    toast.error(message, config);
+  } else if (type === "info") {
+    toast.info(message, config);
   }
-  else if(type==="error"){
-    toast.error(message,config);
-  }
-  else if(type==="info"){
-    toast.info(message,config);
-  }
-  
-
 };

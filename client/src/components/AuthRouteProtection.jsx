@@ -11,9 +11,8 @@ const AuthRouteProtection = () => {
         <Outlet />
       </div>
     );
-  }
-  else{
-    return <Navigate to={RouteSignIn}/>
+  } else {
+    return <Navigate to={RouteSignIn} />;
   }
 };
 
