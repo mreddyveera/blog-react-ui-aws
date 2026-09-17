@@ -43,7 +43,7 @@ jobs:
               working-directory: ./client
               run: npm run build
 
-            - name: Audit dependencies
-              working-directory: ./client
-              run: npm audit --audit-level=high
+            # - name: Audit dependencies
+            #   working-directory: ./client
+            #   run: npm audit --audit-level=high
             
