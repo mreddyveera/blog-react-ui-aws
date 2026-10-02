@@ -67,7 +67,7 @@ jobs:
             - name: Push the image to ECR Repositoty
               run: |
                 docker tag \
-                  ${{vars.REPO_NAME}}:${{env.SHORT_SHA}}
+                  ${{vars.REPO_NAME}}:${{env.SHORT_SHA}} \
                   ${{steps.ecr-login.outputs.registry}}/${{vars.REPO_NAME}}:${{env.SHORT_SHA}}
 
                 docker push \
