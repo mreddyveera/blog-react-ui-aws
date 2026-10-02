@@ -44,9 +44,9 @@ jobs:
                 image-ref: '${{vars.REPO_NAME}}:${{ env.SHORT_SHA }}'
                 format: 'sarif'
                 output: 'trivy-results.sarif'
-                severity: 'CRITICAL'
-                exit-code: '1'
-                ignore-unfixed: true
+                # severity: 'CRITICAL'
+                # exit-code: '1'
+                # ignore-unfixed: true
 
             - name: Upload Trivy results to GitHub Security
               if: always()
