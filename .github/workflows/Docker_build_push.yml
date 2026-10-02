@@ -35,7 +35,7 @@ jobs:
               run : |
                 docker buildx build \
                   --load \
-                  -t ${{vars.REPO_NAME}}:${{env.SHIRT_SHA}} \
+                  -t ${{vars.REPO_NAME}}:${{env.SHORT_SHA}} \
                   .
 
             - name: Run Trivy vulnerability scanner
